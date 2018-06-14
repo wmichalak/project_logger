@@ -1,0 +1,14 @@
+<!-- app/templates/projects/register.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Submit Project Report{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="center">
+    <h1>Submit a project report</h1>
+    <br/>
+    {{ wtf.quick_form(form) }}
+  </div>
+</div>
+{% endblock %}
