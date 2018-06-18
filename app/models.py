@@ -27,7 +27,7 @@ class Employee(UserMixin, db.Model):
     @property
     def password(self):
         """
-        Prevent pasword from being accessed
+        Prevent password from being accessed
         """
         raise AttributeError('password is not a readable attribute.')
 
@@ -91,11 +91,12 @@ class Project(db.Model):
     __tablename__ = 'projects'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), unique=True)
-    description = db.Column(db.String(200))
-    SOW_date = db.Column(db.Date, unique=False)
-    IER_date = db.Column(db.Date, unique=False)
-    employees = db.Column(db.String(60), unique=True)
+    employee = db.Column(db.String(60), unique=False)
+    name = db.Column(db.String(200), unique=True)
+    document_type = db.Column(db.String(60), unique=False)
+    date = db.Column(db.Date, unique=False)
+    doc_name = db.Column(db.String(200), unique=False)
+
 
     def __repr__(self):
         return 'Project: {}>'.format(self.name)
