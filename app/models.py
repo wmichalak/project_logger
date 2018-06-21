@@ -92,7 +92,7 @@ class Project(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     employee = db.Column(db.String(60), unique=False)
-    name = db.Column(db.String(200), unique=True)
+    name = db.Column(db.String(200), unique=True) #project name / description
     document_type = db.Column(db.String(60), unique=False)
     date = db.Column(db.Date, unique=False)
     doc_name = db.Column(db.String(200), unique=False)
