@@ -15,7 +15,7 @@ a, .navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
 }
 
 a:hover, .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover {
-  color: #687430;
+  color: #565656;
 }
 
 footer {
@@ -46,7 +46,7 @@ p.copyright {
 
 .center {
     margin: auto;
-    width: 50%;
+    width: 70%;
     padding: 10px;
 }
 
@@ -61,17 +61,17 @@ p.copyright {
 }
 
 .intro-divider {
-    width: 400px;
+    width: 70%;
     border-top: 1px solid #f8f8f8;
     border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 
 .intro-header {
+    position:fixed;
     padding-top: 250px;
     padding-bottom: 50px;
     text-align: center;
     color: #000000;
-    background: url(../img/siluria_logo.png) no-repeat center center;
     height: 100%;
 }quit
 
@@ -84,7 +84,7 @@ p.copyright {
 .intro-message > h1 {
     margin: 0;
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
-    font-size: 5em;
+    font-size: 3em;
 }
 
 .intro-message > h3 {
@@ -117,6 +117,9 @@ p.copyright {
 .middle {
     display: table-cell;
     vertical-align: middle;
+    white-space: nowrap;
+}
+}
 }
 
 .inner {

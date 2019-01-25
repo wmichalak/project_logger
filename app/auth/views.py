@@ -17,7 +17,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         employee = Employee(email=form.email.data,
-                            username=form.username.data,
+                            username=str(form.first_name.data[0]).lower() + form.last_name.data.lower(),
                             first_name=form.first_name.data,
                             last_name=form.last_name.data,
                             password=form.password.data)
@@ -52,9 +52,9 @@ def login():
 
             # redirect to the appropriate dashboard page
             if employee.is_admin:
-                return redirect(url_for('home.admin_dashboard'))
+                return redirect(url_for('home.dashboard', orderby = 'date'))
             else:
-                return redirect(url_for('home.dashboard'))
+                return redirect(url_for('home.homepage'))
 
         # when login details are incorrect
         else:

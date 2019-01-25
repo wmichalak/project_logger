@@ -19,7 +19,6 @@ def dashboard(orderby = None):
     """
     Render the dashboard template on the /dashboard route
     """
-    print orderby
     if orderby == 'date':
         projects = Project.query.order_by(Project.date.desc()) #all()
     elif orderby == 'ID':
@@ -31,14 +30,22 @@ def dashboard(orderby = None):
     elif orderby == 'document':
         projects = Project.query.order_by(Project.document_type)
 
-
     return render_template('home/dashboard.html', projects=projects, title="Dashboard")
 
-@home.route('/admin/dashboard')
+@home.route('/admin/dashboard/<orderby>')
 @login_required
-def admin_dashboard():
+def admin_dashboard(orderby = None):
     # prevent non-admins from accessing the page
     if not current_user.is_admin:
         abort(403)
-    projects = Project.query.all()
+    if orderby == 'date':
+        projects = Project.query.order_by(Project.date.desc()) #all()
+    elif orderby == 'ID':
+        projects = Project.query.all()
+    elif orderby == 'project_name':
+        projects = Project.query.order_by(Project.doc_name)
+    elif orderby == 'owner':
+        projects = Project.query.order_by(Project.employee)
+    elif orderby == 'document':
+        projects = Project.query.order_by(Project.document_type)
     return render_template('home/admin_dashboard.html', projects=projects, title="Dashboard")

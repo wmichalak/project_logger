@@ -5,8 +5,9 @@ from flask_login import current_user, login_required
 
 from . import admin
 from forms import DepartmentForm, RoleForm
+from ..projects.forms import ProjectEntryForm
 from .. import db
-from ..models import Department, Role
+from ..models import Department, Role, Project
 
 def check_admin():
     """
@@ -244,3 +245,50 @@ def assign_employee(id):
     return render_template('admin/employees/employee.html',
                            employee=employee, form=form,
                            title='Assign Employee')
+
+
+@admin.route('/projects/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_project(id):
+    """
+    Edit a role
+    """
+    check_admin()
+
+    add_project = False
+
+    project = Project.query.get_or_404(id)
+    form = ProjectEntryForm(obj=project)
+    form.employee = project.employee
+    if form.validate_on_submit():
+        project.name = form.name.data
+        project.document_type = form.document_type.data
+        project.date = form.date.data
+        project.doc_name = form.document_type.data + '_' + form.employee.data.username + '_' + form.date.data.strftime("%Y_%m_%d") + '.docx'
+        db.session.add(project)
+        db.session.commit()
+        flash('You have successfully edited the project.')
+
+        # redirect to the roles page
+        return redirect(url_for('home.admin_dashboard', orderby='date'))
+
+    return render_template('admin/projects/project.html', add_project=add_project,
+                           form=form, title="Edit Project")
+
+@admin.route('/projects/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_project(id):
+    """
+    Delete a role from the database
+    """
+    check_admin()
+
+    project = Project.query.get_or_404(id)
+    db.session.delete(project)
+    db.session.commit()
+    flash('You have successfully deleted the project.')
+
+    # redirect to the roles page
+    return redirect(url_for('home.admin_dashboard', orderby='date'))
+
+    return render_template(title="Delete Project")
