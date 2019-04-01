@@ -1,0 +1,59 @@
+# Installation Steps
+
+
+# Install mysql:
+
+brew services start mysql
+
+# install flask-sql alchemy and mysql-python
+pip install flask-sqlalchemy mysql-python
+
+# Set up mysql
+
+mysql -u root
+
+# Create database and admin user in mysql prompt
+mysql> CREATE USER 'logger_admin'@'localhost' IDENTIFIED BY 'XXXXX';
+mysql> CREATE DATABASE logger_db;
+mysql> GRANT ALL PRIVILEGES ON logger_db . * TO 'logger_admin'@'localhost';
+
+
+# Use mysql
+use logger_db;
+show tables;
+#remove entries
+TRUNCATE TABLE table_name;
+#show entries in a table
+select * from [table name]
+#delete entires
+ delete from employees where username = 'wmichalak'
+
+
+
+# Setup flask config environment variables
+export FLASK_CONFIG=development
+export FLASK_APP=run.py
+export FLASK_DEBUG=1
+
+
+
+# Create entries in database
+$ flask shell
+>>> from app.models import Employee
+>>> from app import db
+>>> admin = Employee(email="admin@admin.com",username="admin",password="rootlogger",is_admin=True)
+>>> db.session.add(admin)
+>>> db.session.commit()
+
+
+
+# Unit testing database
+mysql> CREATE DATABASE logger_test;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> GRANT ALL PRIVILEGES ON logger_test .* TO 'logger_admin'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+
+flask db migrate
+flask db upgrade
